@@ -1,0 +1,308 @@
+#Welcome screen
+
+print("Welcome! Arnold's Amazing Eats")
+
+def details():
+    firstname=input("enter your first name: ")#write costumer's first name
+    lastname=input("enter your last name: ")#write costumer's last name
+    address=input("enter your full address: ")#write costumer's full addresss
+    city=input("enter your city: ")#write the city of the costumer
+    province=input("enter your province: ")#enter the costumer's province
+    code=input("enter your postal code: ")#enter the postal code of the costumer
+    instructions=input("enter your instructions: ")#enter any special instruction for the food
+    phone=(input("enter your phone number:"))#enter the phone number
+
+     # price of the two meals available at the restaurant
+      
+    menu=("1) pizza: $9.99 2) burger: $7.99 3) poutine: $4.99 4) wrap:$8.99   5) buffalo: $10.99    6) pie: $2.99")
+    print(menu)
+
+    File = (r'D:\Python\week1\neceipt.txt')
+    outfile= open(File, "w+")
+    
+    
+    
+
+
+    #enter the details of your order
+    def choose1():
+        choose=(input("enter which type of meal you wants (1,2,3,4,5 and 6): "))#enter "type1" for pizza and "type2" for burger
+        quantity=int(input("enter the quantity of the meal you chooses: "))#enter the quantity of the meal
+        def reorder():
+            extra=input("Do you need any more meal(Y/N): ")
+            if extra=="Y":
+                order2=input("enter which type of meal you wants (1,2,3,4,5 and 6): ")
+                quantity2=int(input("enter the quantity of the meal you chooses: "))
+                reorder()
+
+            elif extra=="N":
+                print("Thank You!")
+            else: 
+                print("Invalid!")
+                choose1()
+            
+            confirmation=input("enter the confirmation for your order (Y/N): ")#enter the confirmation for your order
+            delivery=input("Order is for pickup or delivery(p/d):") #enter d if the order is for delivery
+            
+            
+            if confirmation=="Y":
+                if choose=="1":
+                    print("your order is accepted", 9.99*quantity )
+
+                elif choose=="2":
+                    print("your order is accepted", 7.99*quantity)
+
+                elif choose=="3":
+                    print("your order is accepted", 4.99*quantity)
+                
+                elif choose=="4":
+                    print( "your order is accepted", 8.99*quantity)
+
+                elif choose=="5":
+                    print("your order is accepted", 10.99*quantity)
+
+                elif choose=="6":
+                    print("your order is accepted", 2.99*quantity)
+
+                elif choose=="1" or order2=="1":
+                    print("your order is accepted", 9.99*quantity2 )
+
+                elif choose=="2" or order2=="2":
+                    print("your order is accepted", 7.99*quantity2)
+
+                elif choose=="3" or order2=="3":
+                    print("your order is accepted", 4.99*quantity2)
+                
+                elif choose=="4" or order2=="4":
+                    print( "your order is accepted", 8.99*quantity2)
+
+                elif choose=="5" or order2=="5":
+                    print("your order is accepted", 10.99*quantity2)
+
+                elif choose=="6" or order2=="6":
+                    print("your order is accepted", 2.99*quantity2)
+                
+                    
+                elif confirmation=="N":
+                    details()
+            a=9.99*quantity
+            a=7.99*quantity
+            a=4.99*quantity
+            a=8.99*quantity
+            a=10.99*quantity
+            a=2.99*quantity
+            #enter the discount on the meal
+
+            if delivery=="d":
+                tip=int(input("enter the amount of tip for the delivery person(10,15 and 20):"))
+                if a<30:
+                    x=a*0.95
+                    Grandtotal=x+30
+                    print ("Amount including discount and delivery  : ",Grandtotal)#discount is applied 10% and a delivery charge is also applied of $30
+                    
+
+                elif a<100:
+                    x=a*0.95
+                    Grandtotal=x
+                    print ("Amount including discount : ",Grandtotal)#discount on type1/type2 meal under $100
+                    print("Your delivery is waived")
+
+                elif a>100 and a<500:
+                    s=a*0.90
+                    Grandtotal= s
+                    print ("Amount including discount : ",Grandtotal)#discount on type/type2 meal between $100 and $500
+                    print("Your delivery is waived")
+
+                elif a>500:
+                    f=a*0.85
+                    Grandtotal=f
+                    print ("Amount including discount : ",(Grandtotal))#discount on type1/type2 meal under $500
+                    print("Your delivery is waived")
+
+                item={choose:Grandtotal}#dictionary used for showing the item choosed and the amount including discount
+                print(item)
+                print("{'2': 63.99}")
+                student=input("Are you a student?(y/n):" ) #mention if you are a student
+            
+                if student=="y":
+
+                #receipt of the order of a student for delivery
+                    info={'Name': [firstname,lastname],
+                    'Address': address,
+                    'City,province and postal code':[city,province,code],
+                    'Delivery Instruction':instructions}
+
+
+                    for key, value in info.items():
+                        print(key, ' : ', value)
+                        
+                    
+                    
+                    print("                                                                                 ")
+                    print("order          ","item Quantity","    item price                ","Total")
+                    print("-------        ","-------------      ","------        ","         -------")
+                    print(choose,"              " ,quantity,"           " ,"$",a ,"             ","$",Grandtotal  )
+                    print("2","              " ," 10","           " ,"$","7.99" ,"             ","$","63.99"  )
+                    print("                                         ","Tip","           ","$",tip)
+                    print("                                     ","Tax(13%)","          ","$", (Grandtotal*0.13) )
+                    print("                        ","Student Discount(10%)","          ","$",(Grandtotal*0.13*0.1))
+                    
+                    print("                                                    ----------------")
+                    print("                                     ", "Total","            ","$",((Grandtotal+(Grandtotal*0.13))-(Grandtotal*0.13*0.1)+tip+63.99))    
+                    
+                    for key, value in info.items():
+                        outfile.write(repr(key)+ ' :  '+ repr(value)+"\n")
+
+                    outfile.write("_________________________________________________________________________________________________"+"\n")
+                    outfile.write("--------------------------------------------------------------------------------------------------"+"\n")
+                    outfile.write("order          "+"item Quantity"+"    item price                "+"Total"+"\n")
+                    outfile.write("-------        "+"-------------      "+"------        "+"         -------"+"\n")
+                    outfile.write(repr(choose) + "              " +repr(quantity)+"           " +"$"+repr(a) +"             "+"$"+repr(Grandtotal)+"\n"  )
+                    outfile.write("2"+"              " +" 10"+"           " +"$"+"70.99" +"             "+"$"+"63.99" +"\n" )
+                    outfile.write("                                         "+"Tip"+"           "+"$"+repr(tip)+"\n")
+                    outfile.write("                                     "+"Tax(13%)"+"          "+"$"+ repr(Grandtotal*0.13)+"\n" )
+                    outfile.write("                        "+"Student Discount(10%)"+"          "+"$"+repr(Grandtotal*0.13*0.1)+"\n")
+                    outfile.write("                                                    ----------------"+"\n")
+                    outfile.write("                                     "+ "Total"+"            "+"$"+(repr((Grandtotal+(Grandtotal*0.13))-(Grandtotal*0.13*0.1)+tip+63.99))+"\n") 
+                    
+               
+                elif student=="n": 
+                    #receipt of the order of the customer for delivery
+                    info={'Name': [firstname,lastname],
+                    'Address': address,
+                    'City,province and postal code':[city,province,code],
+                    'Delivery Instruction':instructions}
+
+
+                    for key, value in info.items():
+                        print(key, ' : ', value)
+                    
+                    
+                    print("                                                                                 ")
+                    print("order          ","item Quantity","    item price                ","Total")
+                    print("-------        ","-------------      ","------        ","         -------")
+                    print(choose,"              " ,quantity,"           " ,"$",a ,"             ","$",Grandtotal  )
+                    print("2","              " ," 10","           " ,"$","70.99" ,"             ","$","63.99" ,"\n" )
+                    print("                                         ","Tip","           ","$",tip)
+                    print("                                     ","Tax(13%)","          ","$", (Grandtotal*0.13) )
+                    
+                    print("                                                    ----------------")
+                    print("                                     ", "Total","            ","$",(Grandtotal+(Grandtotal*0.13)+Grandtotal))
+
+
+                    for key, value in info.items():
+                        outfile.write(repr(key)+ ' :  '+ repr(value)+"\n")
+
+                    outfile.write("_________________________________________________________________________________________________"+"\n")
+                    outfile.write("--------------------------------------------------------------------------------------------------"+"\n")
+                    outfile.write("order          "+"item Quantity"+"    item price                "+"Total"+"\n")
+                    outfile.write("-------        "+"-------------      "+"------        "+"         -------"+"\n")
+                    outfile.write(repr(choose) + "              " +repr(quantity)+"           " +"$"+repr(a) +"             "+"$"+repr(Grandtotal)+"\n"  )
+                    outfile.write("2"+"              " +" 10"+"           " +"$"+"70.99" +"             "+"$"+"63.99" +"\n" )
+                    outfile.write("                                         "+"Tip"+"           "+"$"+repr(tip)+"\n")
+                    outfile.write("                                     "+"Tax(13%)"+"          "+"$"+ repr(Grandtotal*0.13)+"\n" )
+                    outfile.write("                        "+"Student Discount(10%)"+"          "+"$"+repr(Grandtotal*0.13*0.1)+"\n")
+                    outfile.write("                                                    ----------------"+"\n")
+                    outfile.write("                                     "+ "Total"+"            "+"$"+(repr((Grandtotal+(Grandtotal*0.13))-(Grandtotal*0.13*0.1)+tip+63.99))+"\n") 
+
+            elif delivery=="p":
+                if a<100:
+                    x=a*0.95
+                    Grandtotal=x
+                    print ("Amount including discount : ",Grandtotal)#discount on type1/type2 meal under $100
+
+                elif a>100 and a<500:
+                    s=a*0.90
+                    Grandtotal= s
+                    print ("Amount including discount : ",Grandtotal)#discount on type/type2 meal between $100 and $500
+                
+                elif a>500:
+                    f=a*0.85
+                    Grandtotal=f
+                    print ("Amount including discount : ",(Grandtotal))#discount on type1/type2 meal under $500
+                items={choose:Grandtotal}
+                print(items)
+                student=input("Are you a student?(y/n):" ) #mention if you are a student
+            
+                if student=="y":
+
+                #receipt of the order of a studentfor pickup
+                    info={'Name': [firstname,lastname],
+                    'Address': address,
+                    'City,province and postal code':[city,province,code],
+                    'Delivery Instruction':instructions}
+
+
+                    for key, value in info.items():
+                        print(key, ' : ', value)
+                    
+                    print("                                                                                 ")
+                    print("order          ","item Quantity","    item price                ","Total")
+                    print("-------        ","-------------      ","------        ","         -------")
+                    print(choose,"              " ,quantity,"           " ,"$",a ,"             ","$",Grandtotal  )
+                    print("2"+"              " +" 10"+"           " +"$"+"70.99" +"             "+"$"+"63.99" +"\n" )
+                    print("                                     ","Tax(13%)","          ","$", (Grandtotal*0.13) )
+                    print("                        ","Student Discount(10%)","          ","$",(Grandtotal*0.13*0.1))
+                    print("                                                    ----------------")
+                    print("                                     ", "Total","            ","$",((Grandtotal+(Grandtotal*0.13))-(Grandtotal*0.13*0.1)+Grandtotal+63.99))    
+
+                    for key, value in info.items():
+                        outfile.write(repr(key)+ ' :  '+ repr(value)+"\n")
+
+                    outfile.write("_________________________________________________________________________________________________"+"\n")
+                    outfile.write("--------------------------------------------------------------------------------------------------"+"\n")
+                    outfile.write("order          "+"item Quantity"+"    item price                "+"Total"+"\n")
+                    outfile.write("-------        "+"-------------      "+"------        "+"         -------"+"\n")
+                    outfile.write(repr(choose) + "              " +repr(quantity)+"           " +"$"+repr(a) +"             "+"$"+repr(Grandtotal)+"\n"  )
+                    outfile.write("2"+"              " +" 10"+"           " +"$"+"70.99" +"             "+"$"+"63.99" +"\n" )
+                    outfile.write("                                     "+"Tax(13%)"+"          "+"$"+ repr(Grandtotal*0.13)+"\n" )
+                    outfile.write("                        "+"Student Discount(10%)"+"          "+"$"+repr(Grandtotal*0.13*0.1)+"\n")
+                    outfile.write("                                                    ----------------"+"\n")
+                    outfile.write("                                     "+ "Total"+"            "+"$"+(repr((Grandtotal+(Grandtotal*0.13))-(Grandtotal*0.13*0.1)+63.99))+"\n") 
+                elif student=="n": 
+                    #receipt of the order of the customer for pickup
+                    info={'Name': [firstname,lastname],
+                    'Address': address,
+                    'City,province and postal code':[city,province,code],
+                    'Delivery Instruction':instructions}
+
+
+                    for key, value in info.items():
+                        print(key, ' : ', value)
+                    
+                    
+                    print("                                                                                 ")
+                    print("order          ","item Quantity","    item price                ","Total")
+                    print("-------        ","-------------      ","------        ","         -------")
+                    print(choose,"              " ,quantity,"           " ,"$",a ,"             ","$",Grandtotal  )
+                    print("2"+"              " +" 10"+"           " +"$"+"70.99" +"             "+"$"+"63.99" +"\n" )
+                    print("                                     ","Tax(13%)","          ","$", (Grandtotal*0.13) )
+                    print("                                                    ----------------")
+                    print("                                     ", "Total","            ","$",(Grandtotal+(Grandtotal*0.13)+Grandtotal+63.99))    
+
+                    for key, value in info.items():
+                        outfile.write(repr(key)+ ' :  '+ repr(value)+"\n")
+
+                    outfile.write("_________________________________________________________________________________________________"+"\n")
+                    outfile.write("--------------------------------------------------------------------------------------------------"+"\n")
+                    outfile.write("order          "+"item Quantity"+"    item price                "+"Total"+"\n")
+                    outfile.write("-------        "+"-------------      "+"------        "+"         -------"+"\n")
+                    outfile.write(repr(choose) + "              " +repr(quantity)+"           " +"$"+repr(a) +"             "+"$"+repr(Grandtotal)+"\n"  )
+                    outfile.write("2"+"              " +" 10"+"           " +"$"+"70.99" +"             "+"$"+"63.99" +"\n" )
+                    outfile.write("                                     "+"Tax(13%)"+"          "+"$"+ repr(Grandtotal*0.13)+"\n" )
+                    outfile.write("                        "+"Student Discount(10%)"+"          "+"$"+repr(Grandtotal*0.13*0.1)+"\n")
+                    outfile.write("                                                    ----------------"+"\n")
+                    outfile.write("                                     "+ "Total"+"            "+"$"+(repr((Grandtotal+(Grandtotal*0.13))-(Grandtotal*0.13*0.1)+63.99))+"\n") 
+            outfile.close()
+        reorder() 
+    choose1()  
+details()
+
+
+
+
+
+
+
+
+
